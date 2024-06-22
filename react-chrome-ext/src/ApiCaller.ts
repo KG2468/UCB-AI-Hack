@@ -12,13 +12,13 @@ async function sendMessage() {
     model: "claude-3-5-sonnet-20240620",
     max_tokens: 1024,
     messages: [
-      { role: "assistant", content: user_input},
-      { role: "user", content: user_input}
+      { role: "user", content: user_input},
+      // { role: "user", content: user_input}
     ],
   });
   console.log(msg);
 }
 
-await sendMessage().catch(error => {
+sendMessage().catch(error => {
   console.error("Error:", error);
 });
