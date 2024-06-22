@@ -1,23 +1,11 @@
 {
-  "manifest_version": 3,
-  "name": "Screenshot Saver",
-  "version": "1.0",
-  "description": "Capture and save screenshots of the current tab",
-  "permissions": ["activeTab", "storage"],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon16.png",
-      "48": "icon48.png",
-      "128": "icon128.png"
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "name": "React Chrome Extension",
+    "permissions": ["activeTab", "storage"],
+    "description": "This is a Chrome extension built with React and TypeScript",
+    "action": {
+        "default_popup": "js/index.html",
+        "default_title": "React Chrome Extension"
     }
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
-  }
 }

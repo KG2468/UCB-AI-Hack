@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
 import ScreenshotDisplay from './ScreenshotDisplay';
-import { Screenshot } from '../types';
+import { Screenshot } from '../../../react-chrome-ext/src/types';
 
 const App: React.FC = () => {
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
