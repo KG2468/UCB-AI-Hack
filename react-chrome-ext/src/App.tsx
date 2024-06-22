@@ -31,11 +31,18 @@ const App: React.FC = () => {
       });
     });
   };
+  const autoScreenshot = async () => {
+    while (true) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      captureScreenshot();
+    }
+  }
 
   return (
     <div style={{ width: '300px', padding: '10px' }}>
       <h1>Screenshot Saver</h1>
       <button onClick={captureScreenshot}>Capture Screenshot</button>
+
       <ScreenshotList
         screenshots={screenshots}
         onSelectScreenshot={setSelectedScreenshot}
