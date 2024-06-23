@@ -9,6 +9,10 @@ import { ChatMessage } from './types';
 import { AppContainer, Title, ButtonGroup, Button, StatusText, ScreenshotListContainer, ChatWindowContainer } from './styles';
 import { Tabs, Tab, TabPanel } from './TabComponents';
 import InitialQuestion from './InitialQuestion';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './themes';
+import NightModeToggle from './NightModeToggle';
+import { GlobalStyle } from './styles';
 
 
 const App: React.FC = () => {
@@ -21,6 +25,8 @@ const App: React.FC = () => {
   const [isWaitingForAI, setIsWaitingForAI] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const [projectDescription, setProjectDescription] = useState<string | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
   
 
   useEffect(() => {
@@ -115,48 +121,54 @@ const App: React.FC = () => {
     };
     setChatMessages([systemMessage]);
   };
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <AppContainer>
-      <Title>CADvisor</Title>
-      <ButtonGroup>
-        <Button onClick={captureScreenshot}>Capture Screenshot</Button>
-        {/* <Button onClick={() => setAutoCapture(!autoCapture)}>
-          {autoCapture ? 'Stop Auto Capture' : 'Start Auto Capture'}
-        </Button> */}
-        <Button onClick={clearScreenshots}>Clear Screenshots</Button>
-      </ButtonGroup>
-      {/* <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText> */}
-      
-      <Tabs activeTab={activeTab} onChange={setActiveTab}>
-        <Tab>Screenshots</Tab>
-        <Tab>Chat</Tab>
-      </Tabs>
-
-      <TabPanel value={activeTab} index={0}>
-        <ScreenshotListContainer>
-          <ScreenshotList
-            screenshots={screenshots}
-            onSelectScreenshot={handleSelectScreenshot}
-          />
-        </ScreenshotListContainer>
-        {/* Remove the ScreenshotDisplay component from here */}
-      </TabPanel>
-
-      <TabPanel value={activeTab} index={1}>
-        <ChatWindowContainer>
-          {projectDescription === null ? (
-            <InitialQuestion onSubmit={handleProjectDescription} />
-          ) : (
-            <ChatWindow 
-              chatMessages={chatMessages} 
-              onSendMessage={handleSendMessage}
-              isWaitingForAI={isWaitingForAI}
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <GlobalStyle />
+      <AppContainer>
+        <Title>CADvisor</Title>
+        <NightModeToggle isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+        <ButtonGroup>
+          <Button onClick={captureScreenshot}>Capture Screenshot</Button>
+          <Button onClick={() => setAutoCapture(!autoCapture)}>
+            {autoCapture ? 'Stop Auto Capture' : 'Start Auto Capture'}
+          </Button>
+          <Button onClick={clearScreenshots}>Clear Screenshots</Button>
+        </ButtonGroup>
+        <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText>
+        
+        <Tabs activeTab={activeTab} onChange={setActiveTab}>
+          <Tab>Screenshots</Tab>
+          <Tab>Chat</Tab>
+        </Tabs>
+  
+        <TabPanel value={activeTab} index={0}>
+          <ScreenshotListContainer>
+            <ScreenshotList
+              screenshots={screenshots}
+              onSelectScreenshot={handleSelectScreenshot}
             />
-          )}
-        </ChatWindowContainer>
-      </TabPanel>
-    </AppContainer>
+          </ScreenshotListContainer>
+        </TabPanel>
+  
+        <TabPanel value={activeTab} index={1}>
+          <ChatWindowContainer>
+            {projectDescription === null ? (
+              <InitialQuestion onSubmit={handleProjectDescription} />
+            ) : (
+              <ChatWindow 
+                chatMessages={chatMessages} 
+                onSendMessage={handleSendMessage}
+                isWaitingForAI={isWaitingForAI}
+              />
+            )}
+          </ChatWindowContainer>
+        </TabPanel>
+      </AppContainer>
+    </ThemeProvider>
   );
 };
 

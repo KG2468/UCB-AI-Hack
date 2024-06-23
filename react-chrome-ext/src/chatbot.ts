@@ -74,22 +74,21 @@ import jimp from "jimp";
 //     //Converts image to string of base 64
     
 
-<<<<<<< HEAD
-    (async () => {
-        try {
-            const base64String = await convertImageTo64(file);
-            console.log(base64String);
-        } catch (error) {
-            console.error("Error converting image to base64:", error);
-        }
-    })();
 
-    const image1_media_type = "image/jpeg";
-    //const base64String = await fetchFileFromUrl(file);
-    const base64String = await convertImageTo64(file);
-    console.log(base64String);
+    // (async () => {
+    //     try {
+    //         const base64String = await convertImageTo64(file);
+    //         console.log(base64String);
+    //     } catch (error) {
+    //         console.error("Error converting image to base64:", error);
+    //     }
+    // })();
 
-=======
+    // const image1_media_type = "image/jpeg";
+    // //const base64String = await fetchFileFromUrl(file);
+    // const base64String = await convertImageTo64(file);
+    // console.log(base64String);
+
 //     // //Converts file path into a File object
 //     // async function fetchFileFromUrl(url: string): Promise<File> {
 //     //     const response = await fetch(url);
@@ -164,7 +163,6 @@ async function askQuestion(designGoal: string, specificQuestion: string, file: s
     //         "text": specificQuestion
     //     },
     // );
->>>>>>> 16fbdeba7c8006fa0b13cfd83c02091c93ca6251
     const msg = await anthropic.messages.create({
         model: "claude-3-5-sonnet-20240620",
         max_tokens: 100,
