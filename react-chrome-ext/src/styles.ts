@@ -1,13 +1,21 @@
 // styles.ts
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${props => props.theme.body};
+    color: ${props => props.theme.text};
+    transition: all 0.3s ease;
+  }
+`;
 
 export const AppContainer = styled.div`
   width: 400px;
   height: 600px;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: ${props => props.theme.body};
+  color: ${props => props.theme.text};
   display: flex;
   flex-direction: column;
 `;
@@ -15,7 +23,7 @@ export const AppContainer = styled.div`
 export const Title = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
-  color: #2c3e50;
+  color: ${props => props.theme.text};
 `;
 
 export const ButtonGroup = styled.div`
@@ -26,8 +34,8 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: #3498db;
-  color: white;
+  background-color: ${props => props.theme.buttonBackground};
+  color: ${props => props.theme.buttonText};
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -35,14 +43,14 @@ export const Button = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #2980b9;
+    background-color: ${props => props.theme.buttonHover};
   }
 `;
 
 export const StatusText = styled.p`
   font-size: 14px;
   margin: 10px 0;
-  color: #7f8c8d;
+  color: ${props => props.theme.secondaryText};
 `;
 
 export const ScreenshotListContainer = styled.div`
@@ -67,12 +75,13 @@ export const ScreenshotListItem = styled.li`
   cursor: pointer;
   padding: 15px;
   margin: 10px 0;
-  background-color: #ecf0f1;
+  background-color: ${props => props.theme.grayMessage};
+  color: ${props => props.theme.grayMessageText};
   border-radius: 8px;
   transition: background-color 0.3s, box-shadow 0.3s;
 
   &:hover {
-    background-color: #d5dbdb;
+    background-color: ${props => props.theme.grayMessage === '#ecf0f1' ? '#d5dbdb' : '#3a3a4e'};
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 `;
@@ -85,7 +94,7 @@ export const ScreenshotHeader = styled.div`
 
 export const ScreenshotDate = styled.span`
   font-size: 0.9em;
-  color: #34495e;
+  color: ${props => props.theme.secondaryText};
 `;
 
 export const ScreenshotDropdown = styled.div<{ expanded: boolean }>`
@@ -97,7 +106,7 @@ export const ScreenshotDropdown = styled.div<{ expanded: boolean }>`
 export const ScreenshotImage = styled.img`
   max-width: 100%;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px ${props => props.theme.shadowColor};
   margin-top: 10px;
 `;
 
@@ -105,10 +114,9 @@ export const ChatWindowWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 300px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 5px;
 `;
-
 
 export const ChatMessageList = styled.div`
   flex-grow: 1;
@@ -127,7 +135,7 @@ export const MessageGroup = styled.div<{ isUser: boolean }>`
 
 export const MessageLabel = styled.div`
   font-size: 0.8em;
-  color: #555;
+  color: ${props => props.theme.secondaryText};
   margin-bottom: 2px;
 `;
 
@@ -135,8 +143,8 @@ export const ChatBubble = styled.div<{ isUser: boolean }>`
   max-width: 70%;
   padding: 10px;
   border-radius: 20px;
-  background-color: ${props => props.isUser ? '#007AFF' : '#E9E9EB'};
-  color: ${props => props.isUser ? 'white' : 'black'};
+  background-color: ${props => props.isUser ? props.theme.chatBubbleUser : props.theme.chatBubbleAI};
+  color: ${props => props.isUser ? 'white' : props.theme.grayMessageText};
   word-wrap: break-word;
 `;
 
@@ -154,24 +162,25 @@ export const ChatTimestamp = styled.small`
   opacity: 0.7;
 `;
 
-
 export const ChatInputWrapper = styled.div`
   display: flex;
   padding: 10px;
-  border-top: 1px solid #bdc3c7;
+  border-top: 1px solid ${props => props.theme.borderColor};
 `;
 
 export const ChatInput = styled.input`
   flex-grow: 1;
   padding: 5px;
-  border: 1px solid #bdc3c7;
+  border: 1px solid ${props => props.theme.borderColor};
   border-radius: 3px;
   margin-right: 5px;
+  background-color: ${props => props.theme.inputBackground};
+  color: ${props => props.theme.inputText};
 `;
 
 export const SendButton = styled.button`
-  background-color: #3498db;
-  color: white;
+  background-color: ${props => props.theme.buttonBackground};
+  color: ${props => props.theme.buttonText};
   border: none;
   padding: 5px 10px;
   border-radius: 5px;
@@ -179,7 +188,7 @@ export const SendButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #2980b9;
+    background-color: ${props => props.theme.buttonHover};
   }
 `;
 
