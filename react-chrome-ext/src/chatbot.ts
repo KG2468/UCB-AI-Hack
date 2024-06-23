@@ -223,7 +223,109 @@ async function askQuestion(designGoal: string, specificQuestion: string, file: s
     // return "blah";
 }
 
-export {askQuestion};
+async function askQuestionTemp(designGoal: string, specificQuestion: string, file: string[]): Promise<string> {
+    console.log('hey');
+    const anthropic = new Anthropic({
+        apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
+    });
+    // let images = [];
+    // console.log(file);
+    // for (let i = 0; i < file.length; i++) {
+    //     const base64String = await convertImageTo64(file[i]);
+    //     console.log('hey');
+    //     images.push(base64String);
+    //     // images.push({
+    //     //     "type": "image",
+    //     //     "source": {
+    //     //         "type": "base64",
+    //     //         "media_type": "image/png",
+    //     //         "data": base64String,
+    //     //     },
+    //     // });
+    // }
+    // images.push(
+    //     {
+    //         "type": "text",
+    //         "text": specificQuestion
+    //     },
+    // );
+    const msg = await anthropic.messages.create({
+        model: "claude-3-5-sonnet-20240620",
+        max_tokens: 200,
+        messages: [
+          { role: "user", 
+              content: [
+                  {
+                      "type": "text",
+                      "text": "I am a budding CAD designer. I want to make a" + designGoal + ". Can you help me with this? Please provide a string without any formatting characters as a response."
+                  }
+          ]},
+          {
+            role: "assistant",
+            content: [
+                {
+                    "type": "text",
+                    "text": "Certainly! As a CAD expert, I can help you with this. Please provide me with some details about what you are stuck on."
+                },
+            ]
+          },
+          {
+            role: "user",
+            content: [
+                // {
+                //     "type": "image",
+                //     "source": {
+                //         "type": "base64",
+                //         "media_type": "image/png",
+                //         "data": images[0],
+                //     },
+                // },
+                // {
+                //     "type": "image",
+                //     "source": {
+                //         "type": "base64",
+                //         "media_type": "image/png",
+                //         "data": images[1],
+                //     },
+                // },
+                // {
+                //     "type": "image",
+                //     "source": {
+                //         "type": "base64",
+                //         "media_type": "image/png",
+                //         "data": images[2],
+                //     },
+                // },
+                // {
+                //     "type": "image",
+                //     "source": {
+                //         "type": "base64",
+                //         "media_type": "image/png",
+                //         "data": images[3],
+                //     },
+                // },
+                // {
+                //     "type": "image",
+                //     "source": {
+                //         "type": "base64",
+                //         "media_type": "image/png",
+                //         "data": images[5],
+                //     },
+                // },
+                {
+                    "type": "text",
+                    "text": "I have no screenshots of my workspace. My specific question was:" + specificQuestion + ". Please give me specific guidance on what CAD tools to use and where to apply them.",
+                },
+            ],
+          }
+        ],
+    });
+    return JSON.stringify(msg.content[0]).substring(22, );
+    // return "blah";
+}
+
+
+export {askQuestion, askQuestionTemp};
 // console.log(sendMessage("This is my image.", "https://picsum.photos/200"));
 
 // const agent = createXmlAgent({llm, tools, prompt});
