@@ -1,0 +1,16 @@
+GETTING STARTED WITH  ONSHAPE   
+4 8. You start in the Tutorials and Samples area.  
+ 
+Onshape has two document states:  Public and Private.  If a document is public, anybody with an 
+Onshape account can view and download the file.   If you a re the owner or creator of the 
+document, you can share it with other users, but the users must have an Onshape account.   
+Both public and private documents can be shared.  Sharing a document allows anyone who has 
+been provided access to make modifications to the document.  More than one user can edit a 
+shared document at a time, similarly to how Google Docs works.   
+If you are not the owner/creator of a document, you cannot  share it.  I f you find a public model 
+that you like, you can send the URL t o a friend, so they can see it .  Since neither you nor  your 
+friend own the model, neither you nor  your friend w ill be able to modify the file.   Alternatively, 
+you can make a copy of a public document and own the copy.  Once you own the copy, you can share it w ith anyone you like.  
+You can transfer ownership of a document to another user. If you are finished working on a project, you can hand it off to another user and let them take over.  
+ 
+  

@@ -6,11 +6,11 @@
     "rootDir": "./src",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "types": ["chrome"],
+    "types": ["chrome", "node"],
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "es2015"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,6 +23,10 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
+  // "background": {
+  //   "service_worker": "App.tsx",
+  //   "type": "module"
+  // },
   "ts-node": {
     // these options are overrides used only by ts-node
     // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
