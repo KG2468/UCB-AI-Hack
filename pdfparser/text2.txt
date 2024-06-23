@@ -1,0 +1,32 @@
+GETTING STARTED WITH  ONSHAPE   
+1 Getting Started  
+Explanation of how Onshape Works  
+When I started working in CAD in 1982, the emerging software – the new kid on the block – was 
+AutoCAD created by a company headquartered  in San Rafael, California named Autodesk.  The 
+interface consisted of a screen menu.  You used a keyboard and short cut keys – like L for Line – 
+to create your technical drawings, which consisted of lines, arcs, and circles.  There was no 
+rendering.  Ther e were no layers.  There was no color.  You drew in white on a black 
+background.  At the time, many drafters and designers said that CADD (Computer Aided 
+Drafting/Design) software would never replace pencil and paper.  
+So, here we are in 2016  and how the wo rld has changed.  Today most CADD software is moving 
+to the cloud.  This means that users will download a small software program that allows them to log in to an account and save their work on remote servers.  So, users are no longer tied down to a worksta tion or an office.  You can access your work from any device anywhere in the world 
+– as long as you have an internet connection.  
+Onshape takes it one step beyond this.   
+Firstly, Onshape is entire ly 100% cloud -based.  This means you don’t have to install a ny 
+software.  You don’t have to get permission from your IT department to put the software on your workstation , and you don’t use up any space on your hard drive or jump drive or wherever 
+you like to store files.  Everything happens on Onshape’ s servers.   
+Because Onshape is entirely cloud -based, it is accessible from any device that uses a browser, 
+like Firefox or Chrome.  This means that you can pull up Onshape with any internet connection on your tablet, smart phone, laptop, or work station.  Onshape even  offers apps for Android and 
+iOS devices.  
+Secondly, Onshape offers a free  version to users.  The free version is perfect for students and 
+hobbyists.  You can open an account without a credit card using an email address.  The free account limits the amount  of space you are provided, but you can always delete a project to free 
+up space and start over.  
+Thirdly, because Onshape is entirely cloud -based, you are always using the latest version of 
+Onshape.  Onshape is regularly updated to  fix bugs and add new features.  Because Onshape is 
+constantly being updated some of the screenshots you see in this text may look different fr om 
+what you see on your screen.   Try to ignore any differences.  The tools should work the same 
+way even if new features have been adde d. 
+Onshape works best using Chrome or Firefox browsers.  It will not work at all with Internet Explorer.  Onshape requires WebGL, which IE does not currently support.   
+Onshape does use “cookies,”  so make sure you set your browser to accept cookies.  If th e 
+browser interface is not working properly, perform a hard refresh. (H old down Command and 
+Shift, then press R in any Apple or Mac operating system.  For a WINDOWS operating system, press Ctl+F5. )  
