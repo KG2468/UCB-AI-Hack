@@ -27,13 +27,6 @@ async function sendMessage(query: string, file: string): Promise<String> {
         return buffer.toString('base64');
 }
 
-    // //Converts file path into a File object
-    // async function fetchFileFromUrl(url: string): Promise<File> {
-    //     const response = await fetch(url);
-    //     const blob = await response.blob();
-    //     return new File([blob], 'image.jpg', { type: 'image/jpeg' });
-    // }
-
     (async () => {
         try {
             const base64String = await convertImageTo64(file);
