@@ -8,29 +8,34 @@ class Parser:
     def image_saver(self, pdf):
         reader = PdfReader(pdf)
 
-        page = reader.pages[0]
+        page = reader.pages[3]
         count = 0
 
         for image_file_object in page.images:
-            with open(str(count) + image_file_object.name, "wb") as fp:
-                fp.write(image_file_object.data)
+            img = image_file_object.as_pil_image()  # Convert image object to PIL Image
+            img = img.convert("RGB")  # Convert image to RGB mode
+
+            with open(str(count) + image_file_object.name + ".png", "wb") as fp:
+                print("i am here!!!!")
+                img.save(fp, format="PNG")
                 count += 1
     
     def word_saver(self, pdf):
-        with open(pdf, "rb") as file:
-            reader = PdfReader(file)
-            text = ""
-            for page_num in range(len(reader.pages)):
-                page = reader.pages[page_num]
-                text += page.extract_text()
-                if '/XObject' in page['/Resources']:
-                    xObject = page['/Resources']['/XObject'].get_Object()
-                    for obj in xObject:
-                        if xObject[obj]['/Subtype'] == '/Image':
-                            return text
-        return text
+        reader = PdfReader(pdf)
+        text_before_image = []
+
+        page_number = 4
+        page = reader.pages[page_number]
+        text = page.extract_text()
+        resources = page.get("/Resources", {})
+        xObject = page.get("/xObject", {})
+
+        if not any(xObject[obj].get("/Subtype") == "/Image" for obj in xObject):
+            text_before_image.append(text)
+        
+        return "\n".join(text_before_image)
     
 parsing = Parser()
-text = parsing.word_saver("./onshape_handbook.pdf")
 parsing.image_saver("./onshape_handbook.pdf")
-print(text)
+#text = parsing.word_saver("./onshape_handbook.pdf")
+# print(text)
