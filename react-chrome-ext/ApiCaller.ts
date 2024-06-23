@@ -5,7 +5,6 @@ const anthropic = new Anthropic({
 });
 
 const user_input = "Hello how are you";
-const system_input = "You need to send back exactly what the user sends to you";
 
 const msg = await anthropic.messages.create({
   model: "claude-3-5-sonnet-20240620",
@@ -16,3 +15,4 @@ const msg = await anthropic.messages.create({
   ],
 });
 console.log(msg);
+

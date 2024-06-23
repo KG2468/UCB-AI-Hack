@@ -6,11 +6,11 @@
     "rootDir": "./src",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "types": ["chrome"],
+    "types": ["chrome", "node"],
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "es2015"
     ],
     "allowJs": true,
     "skipLibCheck": true,
