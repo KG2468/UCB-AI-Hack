@@ -1,0 +1,18 @@
+GETTING STARTED WITH  ONSHAPE   
+17  
+For a Sweep, you create two sketches.  One sketch is the profile and one sketch is the path.  The 
+profile travels along the path to create the 3D shape. The two sketches are usually 
+perpendicular to each other.  The path would be on one plane, and the profile would be on a 
+different plane.  
+Common objects that use sweeps are handles, ducts, and cords.  
+ 
+A Loft is also called a blend.  A loft is created by placing two or more sketches on offset planes.  Each sketch is usually a diffe rent shape. The loft blends the sketches together to create a unique 
+3D feature. Common objects that use lofts are faucets and bottles.  
+ 
+When you model a part, you usually create more than one feature.  A part might include an extrude, a revolve, and a loft or it  might just be a single sweep.  It depends on how complicated 
+the part is.  As you work through this text, some parts will be fairly simple and other parts will be quite complex.  
+When you create a sketch, you draw the geometry – lines, arcs, and circles.  Then you use sketch 
+constraints to determine how the elements interact.  There are two types of sketch constraints – 
+geometric and dimensional.  Geometric constraints are horizontal, vertical, perpendicular, parallel, concentric, coincident, tangent, equal, midpoint, symmetric, etc.  
+ 
+ 
