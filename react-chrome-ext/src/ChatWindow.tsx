@@ -4,19 +4,23 @@ import { ChatMessage } from './types';
 import {
   ChatWindowWrapper,
   ChatMessageList,
-  ChatMessage as StyledChatMessage,
+  ChatBubble,
+  ChatBubbleContent,
   ChatTimestamp,
   ChatInputWrapper,
   ChatInput,
-  SendButton
+  SendButton,
+  MessageLabel,
+  MessageGroup
 } from './styles';
 
 interface ChatWindowProps {
   chatMessages: ChatMessage[];
   onSendMessage: (msg: ChatMessage) => void;
+  isWaitingForAI: boolean;
 }
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ chatMessages, onSendMessage }) => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ chatMessages, onSendMessage, isWaitingForAI }) => {
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -27,14 +31,19 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatMessages, onSendMessage }) 
   useEffect(scrollToBottom, [chatMessages]);
 
   const sendMessage = () => {
-    if (message.trim()) {
-      onSendMessage({ message, timestamp: new Date().toISOString() });
+    if (message.trim() && !isWaitingForAI) {
+      const userMessage: ChatMessage = { 
+        message, 
+        timestamp: new Date().toISOString(), 
+        isUser: true 
+      };
+      onSendMessage(userMessage);
       setMessage('');
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isWaitingForAI) {
       sendMessage();
     }
   };
@@ -43,10 +52,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatMessages, onSendMessage }) 
     <ChatWindowWrapper>
       <ChatMessageList>
         {chatMessages.map((msg, index) => (
-          <StyledChatMessage key={index}>
-            <ChatTimestamp>{new Date(msg.timestamp).toLocaleString()}</ChatTimestamp>
-            <p>{msg.message}</p>
-          </StyledChatMessage>
+          <MessageGroup key={index} isUser={msg.isUser}>
+            <MessageLabel>
+              {msg.isUser ? 'You' : 'CADvisor A.I.'}
+            </MessageLabel>
+            <ChatBubble isUser={msg.isUser}>
+              <ChatBubbleContent>{msg.message}</ChatBubbleContent>
+              <ChatTimestamp>{new Date(msg.timestamp).toLocaleString()}</ChatTimestamp>
+            </ChatBubble>
+          </MessageGroup>
         ))}
         <div ref={messagesEndRef} />
       </ChatMessageList>
@@ -57,8 +71,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatMessages, onSendMessage }) 
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Type a message..."
+          disabled={isWaitingForAI}
         />
-        <SendButton onClick={sendMessage}>Send</SendButton>
+        <SendButton onClick={sendMessage} disabled={isWaitingForAI}>
+          {isWaitingForAI ? 'Waiting...' : 'Send'}
+        </SendButton>
       </ChatInputWrapper>
     </ChatWindowWrapper>
   );
