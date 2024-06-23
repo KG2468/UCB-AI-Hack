@@ -6,14 +6,20 @@ import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
 import { ChatMessage } from './types';
 import { AppContainer, Title, ButtonGroup, Button, StatusText, ScreenshotListContainer, ChatWindowContainer } from './styles';
+import { Tabs, Tab, TabPanel } from './TabComponents';
+import InitialQuestion from './InitialQuestion';
+
 
 const App: React.FC = () => {
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
   const [selectedScreenshot, setSelectedScreenshot] = useState<Screenshot | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [autoCapture, setAutoCapture] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [isWaitingForAI, setIsWaitingForAI] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const [projectDescription, setProjectDescription] = useState<string | null>(null);
   
 
   useEffect(() => {
@@ -36,6 +42,12 @@ const App: React.FC = () => {
       }
     };
   }, [autoCapture]);
+
+  useEffect(() => {
+    if (selectedIndex !== null && screenshots.length > selectedIndex) {
+      setSelectedScreenshot(screenshots[selectedIndex]);
+    }
+  }, [screenshots, selectedIndex]);
 
   const loadScreenshots = () => {
     chrome.storage.local.get({ screenshots: [] }, (result) => {
@@ -62,7 +74,14 @@ const App: React.FC = () => {
   const clearScreenshots = () => {
     chrome.storage.local.set({ screenshots: [] }, () => {
       setScreenshots([]);
+      setSelectedScreenshot(null);
+      setSelectedIndex(null);
     });
+  };
+
+  const handleSelectScreenshot = (screenshot: Screenshot, index: number) => {
+    setSelectedScreenshot(screenshot);
+    setSelectedIndex(index);
   };
 
   const handleSendMessage = (msg: ChatMessage) => {
@@ -78,9 +97,20 @@ const App: React.FC = () => {
     setTimeout(() => {
       setChatMessages(prevMessages => [...prevMessages, aiMessage]);
       setIsWaitingForAI(false);
-    }, 1000); // Increased delay to 1 second to make the effect more noticeable
+    }, 1000);
   };
-  
+
+  const handleProjectDescription = (description: string) => {
+    setProjectDescription(description);
+    // You might want to send this description to your AI or store it for later use
+    const systemMessage: ChatMessage = {
+      message: `Project description: ${description}`,
+      timestamp: new Date().toISOString(),
+      isUser: false
+    };
+    setChatMessages([systemMessage]);
+  };
+
   return (
     <AppContainer>
       <Title>CADvisor</Title>
@@ -92,20 +122,35 @@ const App: React.FC = () => {
         <Button onClick={clearScreenshots}>Clear Screenshots</Button>
       </ButtonGroup>
       <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText>
-      <ScreenshotListContainer>
-        <ScreenshotList
-          screenshots={screenshots}
-          onSelectScreenshot={setSelectedScreenshot}
-        />
-      </ScreenshotListContainer>
-      <ScreenshotDisplay screenshot={selectedScreenshot} />
-      <ChatWindowContainer>
-        <ChatWindow 
-          chatMessages={chatMessages} 
-          onSendMessage={handleSendMessage}
-          isWaitingForAI={isWaitingForAI}
-        />
-      </ChatWindowContainer>
+      
+      <Tabs activeTab={activeTab} onChange={setActiveTab}>
+        <Tab>Screenshots</Tab>
+        <Tab>Chat</Tab>
+      </Tabs>
+
+      <TabPanel value={activeTab} index={0}>
+        <ScreenshotListContainer>
+          <ScreenshotList
+            screenshots={screenshots}
+            onSelectScreenshot={handleSelectScreenshot}
+          />
+        </ScreenshotListContainer>
+        {/* Remove the ScreenshotDisplay component from here */}
+      </TabPanel>
+
+      <TabPanel value={activeTab} index={1}>
+        <ChatWindowContainer>
+          {projectDescription === null ? (
+            <InitialQuestion onSubmit={handleProjectDescription} />
+          ) : (
+            <ChatWindow 
+              chatMessages={chatMessages} 
+              onSendMessage={handleSendMessage}
+              isWaitingForAI={isWaitingForAI}
+            />
+          )}
+        </ChatWindowContainer>
+      </TabPanel>
     </AppContainer>
   );
 };

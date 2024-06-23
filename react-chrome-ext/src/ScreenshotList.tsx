@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Screenshot } from './types';
+import {
+  ScreenshotListWrapper,
+  ScreenshotListItem,
+  ScreenshotImage,
+  ScreenshotDate,
+  ScreenshotHeader,
+  ScreenshotDropdown
+} from './styles';
 
 interface Props {
   screenshots: Screenshot[];
-  onSelectScreenshot: (screenshot: Screenshot) => void;
+  onSelectScreenshot: (screenshot: Screenshot, index: number) => void;
 }
 
 const ScreenshotList: React.FC<Props> = ({ screenshots, onSelectScreenshot }) => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const handleClick = (screenshot: Screenshot, index: number) => {
+    onSelectScreenshot(screenshot, index);
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return (
-    <ul style={{ listStyleType: 'none', padding: 0 }}>
+    <ScreenshotListWrapper>
       {screenshots.map((screenshot, index) => (
-        <li
-          key={index}
-          onClick={() => onSelectScreenshot(screenshot)}
-          style={{ cursor: 'pointer', padding: '5px', margin: '5px 0', backgroundColor: '#f0f0f0', borderRadius: '3px' }}
-        >
-          Screenshot {index + 1} - {new Date(screenshot.date).toLocaleString()}
-        </li>
+        <React.Fragment key={index}>
+          <ScreenshotListItem onClick={() => handleClick(screenshot, index)}>
+            <ScreenshotHeader>
+              <ScreenshotDate>
+                {new Date(screenshot.date).toLocaleString()}
+              </ScreenshotDate>
+            </ScreenshotHeader>
+          </ScreenshotListItem>
+          <ScreenshotDropdown expanded={expandedIndex === index}>
+            <ScreenshotImage src={screenshot.url} alt={`Screenshot ${index + 1}`} />
+          </ScreenshotDropdown>
+        </React.Fragment>
       ))}
-    </ul>
+    </ScreenshotListWrapper>
   );
 };
 
