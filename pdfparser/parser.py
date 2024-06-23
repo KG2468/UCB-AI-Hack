@@ -1,12 +1,39 @@
 import PyPDF2
 # import pdfminer.six
-from PyPDF2 import PdfReader
-# from pdfminer.high_level import extract_pages
-# from pdfminer.layout import LTTextBoxHorizontal, LTImage
+
+from pypdf import PdfReader
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LTTextBoxHorizontal, LTImage
+
 import os
 from PIL import Image
+import pdfplumber
+
+# def dict_to_image(img_dict):
+#     # Extract necessary information
+#     width = img_dict['width']
+#     height = img_dict['height']
+#     stream = img_dict['stream']
+#     colorspace = img_dict['colorspace']  # This is simplified; actual conversion may be needed
+
+#     # Determine the mode based on 'colorspace' (this example assumes RGB)
+#     mode = 'RGB' if colorspace == 'RGB' else 'L'  # Fallback to grayscale
+
+#     # Convert stream to bytes if it's not already in that format
+#     # if isinstance(stream, str):
+#     # stream_bytes = stream.decode()
+#     # elif isinstance(stream, list):  # Assuming stream might be a list of bytes
+#     # stream_bytes = bytes(stream)
+#     # else:
+#     #     stream_bytes = stream  # Assuming it's already a bytes-like object
+
+#     # Create an image from the stream
+#     image = Image.frombytes(mode, (int(width), int(height)), stream_bytes)
+#     return image
 
 class Parser:
+    
+
     
     # def image_saver(self, pdf):
     #     reader = PdfReader(pdf)
@@ -22,9 +49,30 @@ class Parser:
     #             print("i am here!!!!")
     #             img.save(fp, format="PNG")
     #             count += 1
+    
 
 
+    def extract_images(self, pdf_path):
+        reader = PdfReader(pdf_path)
+
+        pages = reader.pages
+        count = 0
+        for page in pages:
+            for image_file_object in page.images:
+                with open("pdfimages/" + str(count) + image_file_object.name, "wb") as fp:
+                    fp.write(image_file_object.data)
+            count += 1
+        # pdf =  pdfplumber.open(pdf_path)
+        # for page in pdf.pages:
+        #     images = page.images
+        #     for img in images:
+        #         print(img.keys())
+        #         im = dict_to_image(img)
+        #         im.save(f"/Users/kinjal/Code/UCB-AI-Hack/pdfimages/image_{img['object_number']}.png")
+        # first_page = pdf.pages[0]
+        # print(first_page.chars[0])
     # def extract_images(self, pdf_path):
+
         # output_dir = "/Users/kinjal/Code/UCB-AI-Hack/pdfimages"
         # if not os.path.exists(output_dir):
         #     os.makedirs(output_dir)
@@ -66,6 +114,7 @@ class Parser:
     
 parsing = Parser()
 #parsing.image_saver("./onshape_handbook.pdf")
-text = parsing.word_saver("./onshape_handbook.pdf")
+# text = parsing.word_saver("./onshape_handbook.pdf")
+parsing.extract_images("/Users/kinjal/Code/UCB-AI-Hack/pdfparser/onshape_handbook.pdf")
 
 # print(text)
