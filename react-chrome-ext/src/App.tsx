@@ -10,11 +10,11 @@ import { AppContainer, Title, ButtonGroup, Button, StatusText, ScreenshotListCon
 const App: React.FC = () => {
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
   const [selectedScreenshot, setSelectedScreenshot] = useState<Screenshot | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [autoCapture, setAutoCapture] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [isWaitingForAI, setIsWaitingForAI] = useState(false);
-  
 
   useEffect(() => {
     loadScreenshots();
@@ -36,6 +36,12 @@ const App: React.FC = () => {
       }
     };
   }, [autoCapture]);
+
+  useEffect(() => {
+    if (selectedIndex !== null && screenshots.length > selectedIndex) {
+      setSelectedScreenshot(screenshots[selectedIndex]);
+    }
+  }, [screenshots, selectedIndex]);
 
   const loadScreenshots = () => {
     chrome.storage.local.get({ screenshots: [] }, (result) => {
@@ -62,7 +68,14 @@ const App: React.FC = () => {
   const clearScreenshots = () => {
     chrome.storage.local.set({ screenshots: [] }, () => {
       setScreenshots([]);
+      setSelectedScreenshot(null);
+      setSelectedIndex(null);
     });
+  };
+
+  const handleSelectScreenshot = (screenshot: Screenshot, index: number) => {
+    setSelectedScreenshot(screenshot);
+    setSelectedIndex(index);
   };
 
   const handleSendMessage = (msg: ChatMessage) => {
@@ -78,9 +91,9 @@ const App: React.FC = () => {
     setTimeout(() => {
       setChatMessages(prevMessages => [...prevMessages, aiMessage]);
       setIsWaitingForAI(false);
-    }, 1000); // Increased delay to 1 second to make the effect more noticeable
+    }, 1000);
   };
-  
+
   return (
     <AppContainer>
       <Title>CADvisor</Title>
@@ -95,7 +108,7 @@ const App: React.FC = () => {
       <ScreenshotListContainer>
         <ScreenshotList
           screenshots={screenshots}
-          onSelectScreenshot={setSelectedScreenshot}
+          onSelectScreenshot={handleSelectScreenshot}
         />
       </ScreenshotListContainer>
       <ScreenshotDisplay screenshot={selectedScreenshot} />
