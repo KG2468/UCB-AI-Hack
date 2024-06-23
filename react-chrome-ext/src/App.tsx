@@ -1,6 +1,7 @@
 // App.tsx
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
+import { askQuestion, askQuestionTemp } from './chatbot';
 import ScreenshotDisplay from './ScreenshotDisplay';
 import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [projectDescription, setProjectDescription] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
   
 
   useEffect(() => {
@@ -33,22 +35,24 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (autoCapture) {
-      const id = window.setInterval(captureScreenshot, 1000);
+      // chrome.alarms.create("Screenshot", {when: Date.now()+12000});
+      // chrome.alarms.onAlarm.addListener(captureScreenshot);
+      // setIntervalId(1);
+      const id = window.setInterval(captureScreenshot, 12000);
       setIntervalId(id);
     } else {
       if (intervalId) {
         window.clearInterval(intervalId);
+        // chrome.alarms.clear("Screenshot");
         setIntervalId(null);
       }
     }
     return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-      }
     };
   }, [autoCapture]);
 
   useEffect(() => {
+
     if (selectedIndex !== null && screenshots.length > selectedIndex) {
       setSelectedScreenshot(screenshots[selectedIndex]);
     }
@@ -84,18 +88,20 @@ const App: React.FC = () => {
     });
   };
 
+
   const handleSelectScreenshot = (screenshot: Screenshot, index: number) => {
     setSelectedScreenshot(screenshot);
     setSelectedIndex(index);
   };
 
-  const handleSendMessage = (msg: ChatMessage) => {
+  const handleSendMessage = async (msg: ChatMessage) => {
     setChatMessages(prevMessages => [...prevMessages, msg]);
     setIsWaitingForAI(true);
     
     // Add AI response
+    const aiAnswer = await askQuestion(projectDescription!, msg.message, screenshots.map(screenshot => screenshot.url));
     const aiMessage: ChatMessage = {
-      message: "AI part goes here",
+      message: aiAnswer,
       timestamp: new Date().toISOString(),
       isUser: false
     };
@@ -115,7 +121,6 @@ const App: React.FC = () => {
     };
     setChatMessages([systemMessage]);
   };
-
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };

@@ -1,0 +1,11 @@
+GETTING STARTED WITH  ONSHAPE   
+10 16. Highlight the Dowel pin part.  Right click and select Hide other parts . 
+ 
+17. Visibility of all the parts is turned off. The small dot towards the right is the origin.  
+ 
+18. Right click in the display window and select Show All to restore visibility of the model.  
+ 
+19. In the lower left of the screen, there is a small menu icon. If you left click on the icon, 
+you get a quick list of all the tabs available in the model. This allows you to qu ickly 
+navigate to the desired tab. Left click on Shaft 1.  
+ 

@@ -1,0 +1,17 @@
+GETTING STARTED WITH  ONSHAPE   
+18 Geometric constraints are located on the sketch ribbon.  To add a sketch constraint to 
+geometry, select the element(s) and then select the desired constraint.  
+Sketches can be under -defined, fully -defined, or over -defined.  Under -defined means the sketch 
+does not have all the information – dimensions or geometric constraints – to fully constrain or 
+define all the elements.  Fully defined means that all the geometry has been fully designated.  
+Over -defined means  that there is duplicate information in the sketch.  
+When a sketch element is displayed in blue that indicates it is not fully defined.  When a sketch 
+element is defined in black, it is fully defined.  
+ 
+Because the sketch is located in 3 -dimensional space, the elements always need to be located in 
+relation to the origin in order to be fully defined.  Otherwise, they are just floating in space.  
+As dimensions and geometric constraints are placed, the geometry changes color.  
+Black represents geometry that is fu lly defined and blue indicates geometry that is under 
+defined.  
+Some of the elements in this sketch are displayed as blue because it still isn’t indicated where it is located in relation to the origin.  
+ 

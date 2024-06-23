@@ -9,3 +9,8 @@ export interface ChatMessage {
   timestamp: string;
   isUser: boolean;
 }
+
+
+export type MessageHistory = string[];
+
+
