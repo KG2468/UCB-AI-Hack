@@ -99,7 +99,7 @@ const App: React.FC = () => {
     setIsWaitingForAI(true);
     
     // Add AI response
-    const aiAnswer = await askQuestionTemp("A basic car model", msg.message, screenshots.map(screenshot => screenshot.url));
+    const aiAnswer = await askQuestion(projectDescription!, msg.message, screenshots.map(screenshot => screenshot.url));
     const aiMessage: ChatMessage = {
       message: aiAnswer,
       timestamp: new Date().toISOString(),

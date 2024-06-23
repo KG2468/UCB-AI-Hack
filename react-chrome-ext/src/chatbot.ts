@@ -51,6 +51,26 @@ import jimp from "jimp";
     //     xmlHttpRequest.send();
     // });
 
+    async function getBase64ImageFromUrl(imageUrl: string) {
+        console.log(imageUrl);
+        var res = await fetch(imageUrl);
+        var blob = await res.blob();
+      
+        return new Promise((resolve, reject) => {
+          var reader  = new FileReader();
+          reader.onload = function () {
+            //me.modelvalue = reader.result;
+            console.log(reader.result);
+          };
+      
+          reader.onerror = () => {
+            return reject(self);
+          };
+          reader.readAsDataURL(blob);
+        })
+      }
+      
+
     // const buffer = Buffer.from(response.data, 'binary');
     // return buffer.toString('base64');
     // const image = await jimp.read(buffer.toString('base64'));
@@ -137,26 +157,30 @@ import jimp from "jimp";
 //     return "0";
 // }
 
-async function askQuestion(designGoal: string, specificQuestion: string, file: string[]): Promise<string> {
+async function askQuestion(designGoal: string, specificQuestion: string, file: string[]){
     console.log('hey');
     const anthropic = new Anthropic({
         apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
     });
-    // let images = [];
-    // console.log(file);
-    // for (let i = 0; i < file.length; i++) {
-    //     const base64String = await convertImageTo64(file[i]);
-    //     console.log('hey');
+    let images = [];
+    console.log(file);
+    // images = file.map(async (file) => {
+    //     file.substring(22)});
+    // console.log(images);
+    for (let i = 0; i < file.length; i++) {
+        images[i] = file[i].substring(22);
+    //     const base64String = await getBase64ImageFromUrl(file[i]);
+    //     // console.log('hey');
     //     images.push(base64String);
-    //     // images.push({
-    //     //     "type": "image",
-    //     //     "source": {
-    //     //         "type": "base64",
-    //     //         "media_type": "image/png",
-    //     //         "data": base64String,
-    //     //     },
-    //     // });
-    // }
+        // images.push({
+        //     "type": "image",
+        //     "source": {
+        //         "type": "base64",
+        //         "media_type": "image/png",
+        //         "data": base64String,
+        //     },
+        // });
+    }
     // images.push(
     //     {
     //         "type": "text",
@@ -165,7 +189,7 @@ async function askQuestion(designGoal: string, specificQuestion: string, file: s
     // );
     const msg = await anthropic.messages.create({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 100,
+        max_tokens: 300,
         messages: [
           { role: "user", 
               content: [
@@ -186,14 +210,14 @@ async function askQuestion(designGoal: string, specificQuestion: string, file: s
           {
             role: "user",
             content: [
-                // {
-                //     "type": "image",
-                //     "source": {
-                //         "type": "base64",
-                //         "media_type": "image/png",
-                //         "data": images[0],
-                //     },
-                // },
+                {
+                    "type": "image",
+                    "source": {
+                        "type": "base64",
+                        "media_type": "image/png",
+                        "data": images[0]+"",
+                    },
+                },
                 // {
                 //     "type": "image",
                 //     "source": {
@@ -228,7 +252,7 @@ async function askQuestion(designGoal: string, specificQuestion: string, file: s
                 // },
                 {
                     "type": "text",
-                    "text": "I have no screenshots of my workspace. My specific question was:" + specificQuestion + ". Please give me specific guidance on what CAD tools to use and where to apply them.",
+                    "text": "Here is a screenshot of my workspace. My specific question was:" + specificQuestion + ". Please give me specific guidance on what CAD tools to use and where to apply them.",
                 },
             ],
           }
