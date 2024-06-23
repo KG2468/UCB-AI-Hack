@@ -83,20 +83,51 @@ export const ChatWindowWrapper = styled.div`
   border-radius: 5px;
 `;
 
+
 export const ChatMessageList = styled.div`
   flex-grow: 1;
   overflow-y: auto;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
 `;
 
-export const ChatMessage = styled.div`
+export const MessageGroup = styled.div<{ isUser: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: ${props => props.isUser ? 'flex-end' : 'flex-start'};
   margin-bottom: 10px;
 `;
 
-export const ChatTimestamp = styled.small`
-  color: #7f8c8d;
+export const MessageLabel = styled.div`
   font-size: 0.8em;
+  color: #555;
+  margin-bottom: 2px;
 `;
+
+export const ChatBubble = styled.div<{ isUser: boolean }>`
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: ${props => props.isUser ? '#007AFF' : '#E9E9EB'};
+  color: ${props => props.isUser ? 'white' : 'black'};
+  word-wrap: break-word;
+`;
+
+export const ChatBubbleContent = styled.p`
+  margin: 0;
+  padding: 0;
+  text-align: left;
+`;
+
+export const ChatTimestamp = styled.small`
+  display: block;
+  font-size: 0.7em;
+  margin-top: 5px;
+  text-align: right;
+  opacity: 0.7;
+`;
+
 
 export const ChatInputWrapper = styled.div`
   display: flex;
@@ -125,3 +156,4 @@ export const SendButton = styled.button`
     background-color: #2980b9;
   }
 `;
+

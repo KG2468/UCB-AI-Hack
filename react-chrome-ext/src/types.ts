@@ -7,4 +7,5 @@ export interface Screenshot {
 export interface ChatMessage {
   message: string;
   timestamp: string;
+  isUser: boolean;
 }
