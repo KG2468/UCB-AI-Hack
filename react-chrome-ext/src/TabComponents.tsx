@@ -10,13 +10,13 @@ const TabsContainer = styled.div`
 const TabButton = styled.button<{ active: boolean }>`
   padding: 10px 20px;
   border: none;
-  background-color: ${props => props.active ? '#3498db' : 'transparent'};
-  color: ${props => props.active ? 'white' : '#333'};
+  background-color: ${props => props.active ? props.theme.activeTabBackground : 'transparent'};
+  color: ${props => props.active ? props.theme.activeTabText : props.theme.inactiveTabText};
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: ${props => props.active ? '#2980b9' : '#f0f0f0'};
+    background-color: ${props => props.active ? props.theme.activeTabBackground : props.theme.tabHoverBackground};
   }
 `;
 
