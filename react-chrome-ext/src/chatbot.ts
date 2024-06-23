@@ -74,6 +74,21 @@ import jimp from "jimp";
 //     //Converts image to string of base 64
     
 
+
+    // (async () => {
+    //     try {
+    //         const base64String = await convertImageTo64(file);
+    //         console.log(base64String);
+    //     } catch (error) {
+    //         console.error("Error converting image to base64:", error);
+    //     }
+    // })();
+
+    // const image1_media_type = "image/jpeg";
+    // //const base64String = await fetchFileFromUrl(file);
+    // const base64String = await convertImageTo64(file);
+    // console.log(base64String);
+
 //     // //Converts file path into a File object
 //     // async function fetchFileFromUrl(url: string): Promise<File> {
 //     //     const response = await fetch(url);
