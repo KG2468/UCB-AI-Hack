@@ -58,9 +58,13 @@ class Parser:
         if not any(xObject[obj].get("/Subtype") == "/Image" for obj in xObject):
             text_before_image.append(text)
         
+        with open ("text" + str(page_number) + ".txt", "a") as f:
+            f.write(text)
+        
         return "\n".join(text_before_image)
     
 parsing = Parser()
-parsing.extract_images("/Users/kinjal/Code/UCB-AI-Hack/pdfparser/onshape_handbook.pdf")
-#text = parsing.word_saver("./onshape_handbook.pdf")
+#parsing.image_saver("./onshape_handbook.pdf")
+text = parsing.word_saver("./onshape_handbook.pdf")
+
 # print(text)
