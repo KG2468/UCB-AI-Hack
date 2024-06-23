@@ -8,3 +8,6 @@ export interface ChatMessage {
   message: string;
   timestamp: string;
 }
+
+export type MessageHistory = string[];
+
