@@ -22,23 +22,23 @@ const App: React.FC = () => {
     loadScreenshots();
   }, []);
 
-  // useEffect(() => {
-  //   if (autoCapture) {
-  //     // chrome.alarms.create("Screenshot", {when: Date.now()+12000});
-  //     // chrome.alarms.onAlarm.addListener(captureScreenshot);
-  //     // setIntervalId(1);
-  //     const id = window.setInterval(captureScreenshot, 12000);
-  //     setIntervalId(id);
-  //   } else {
-  //     if (intervalId) {
-  //       window.clearInterval(intervalId);
-  //       // chrome.alarms.clear("Screenshot");
-  //       setIntervalId(null);
-  //     }
-  //   }
-  //   return () => {
-  //   };
-  // }, [autoCapture]);
+  useEffect(() => {
+    if (autoCapture) {
+      // chrome.alarms.create("Screenshot", {when: Date.now()+12000});
+      // chrome.alarms.onAlarm.addListener(captureScreenshot);
+      // setIntervalId(1);
+      const id = window.setInterval(captureScreenshot, 12000);
+      setIntervalId(id);
+    } else {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        // chrome.alarms.clear("Screenshot");
+        setIntervalId(null);
+      }
+    }
+    return () => {
+    };
+  }, [autoCapture]);
 
   useEffect(() => {
     if (screenshots.length == 5) {
