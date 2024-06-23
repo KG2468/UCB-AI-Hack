@@ -1,16 +1,18 @@
+// App.tsx
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
 import ScreenshotDisplay from './ScreenshotDisplay';
 import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
-import { ChatMessage } from './types'; // Assuming you have a types file or add this type there
+import { ChatMessage } from './types';
+import { AppContainer, Title, ButtonGroup, Button, StatusText, ScreenshotListContainer, ChatWindowContainer } from './styles';
 
 const App: React.FC = () => {
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
   const [selectedScreenshot, setSelectedScreenshot] = useState<Screenshot | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [autoCapture, setAutoCapture] = useState(false);
-  let [intervalId, setIntervalId] = useState(0);
+  const [intervalId, setIntervalId] = useState<number | null>(null);
 
   useEffect(() => {
     loadScreenshots();
@@ -18,15 +20,18 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (autoCapture) {
-      let temp = window.setInterval(() => {
-        captureScreenshot();
-      }, 1000)
-      setIntervalId(temp); // Adjust time as needed
+      const id = window.setInterval(captureScreenshot, 1000);
+      setIntervalId(id);
     } else {
-      window.clearInterval(intervalId);
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        setIntervalId(null);
+      }
     }
     return () => {
-      setIntervalId(0);
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
     };
   }, [autoCapture]);
 
@@ -43,55 +48,43 @@ const App: React.FC = () => {
           url: dataUrl,
           date: new Date().toISOString(),
         };
-        // Use functional update to ensure we have the latest state
         setScreenshots((prevScreenshots) => {
-          let updatedScreenshots = [...prevScreenshots, newScreenshot];
-          // Ensure only the last 5 screenshots are kept
-          if (updatedScreenshots.length > 5) {
-            updatedScreenshots = updatedScreenshots.slice(-5);
-          }
-          chrome.storage.local.set({ screenshots: updatedScreenshots }, () => {
-            // This callback doesn't need to update state again
-          });
+          let updatedScreenshots = [...prevScreenshots, newScreenshot].slice(-5);
+          chrome.storage.local.set({ screenshots: updatedScreenshots });
           return updatedScreenshots;
         });
       });
     });
   };
-  
+
   const clearScreenshots = () => {
     chrome.storage.local.set({ screenshots: [] }, () => {
       setScreenshots([]);
     });
-  }
-  // const autoScreenshot = async () => {
-  //   while (true && autoCapture) {
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-  //     captureScreenshot();
-  //   }
-  // };
-
-  // const stopCapture = () => {
-  //   ;
-  //   setDidThisShitRun(true);
-  // };
+  };
 
   return (
-    <div style={{ width: '300px', padding: '10px' }}>
-      <h1>Screenshot Saver</h1>
-      <button onClick={captureScreenshot}>Capture Screenshot</button>
-      <button onClick={() =>setAutoCapture(true)}>Auto Capture Screenshot</button>
-      <button onClick={() =>setAutoCapture(false)}>Stop Capture Screenshot</button>
-      <button onClick={clearScreenshots}>Clear Screenshots</button>
-      <p>{autoCapture.toString()}</p> {/* Displaying the value of autoCapture */}
-      <p>{intervalId}</p>
-      <ScreenshotList
-        screenshots={screenshots}
-        onSelectScreenshot={setSelectedScreenshot}
-      />
+    <AppContainer>
+      <Title>CADvisor</Title>
+      <ButtonGroup>
+        <Button onClick={captureScreenshot}>Capture Screenshot</Button>
+        <Button onClick={() => setAutoCapture(!autoCapture)}>
+          {autoCapture ? 'Stop Auto Capture' : 'Start Auto Capture'}
+        </Button>
+        <Button onClick={clearScreenshots}>Clear Screenshots</Button>
+      </ButtonGroup>
+      <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText>
+      <ScreenshotListContainer>
+        <ScreenshotList
+          screenshots={screenshots}
+          onSelectScreenshot={setSelectedScreenshot}
+        />
+      </ScreenshotListContainer>
       <ScreenshotDisplay screenshot={selectedScreenshot} />
-      <ChatWindow chatMessages={chatMessages} onSendMessage={(msg) => setChatMessages([...chatMessages, msg])} />
-    </div>
+      <ChatWindowContainer>
+        <ChatWindow chatMessages={chatMessages} onSendMessage={(msg) => setChatMessages([...chatMessages, msg])} />
+      </ChatWindowContainer>
+    </AppContainer>
   );
 };
 
