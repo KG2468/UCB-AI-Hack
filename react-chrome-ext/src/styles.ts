@@ -21,7 +21,8 @@ export const AppContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 24px;
+  font-size: 32px; // Increased from 24px
+  font-weight: 700; // Bolder font weight
   margin-bottom: 20px;
   color: ${props => props.theme.text};
 `;
@@ -33,9 +34,9 @@ export const ButtonGroup = styled.div`
   margin-bottom: 20px;
 `;
 
-export const Button = styled.button`
-  background-color: ${props => props.theme.buttonBackground};
-  color: ${props => props.theme.buttonText};
+export const Button = styled.button<{ isDelete?: boolean }>`
+  background-color: ${props => props.isDelete ? props.theme.deleteButtonBackground : props.theme.buttonBackground};
+  color: ${props => props.isDelete ? props.theme.deleteButtonText : props.theme.buttonText};
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -43,7 +44,11 @@ export const Button = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${props => props.theme.buttonHover};
+    background-color: ${props => 
+      props.isDelete 
+        ? props.theme.deleteButtonHover 
+        : props.theme.activeTabBackground
+    };
   }
 `;
 

@@ -9,6 +9,11 @@ export const lightTheme = {
     activeTabText: 'white',
     inactiveTabText: '#333',
     tabHoverBackground: '#f0f0f0',
+    buttonBackground: '#f0f0f0',
+    buttonText: '#333',
+    deleteButtonBackground: '#ffcccb', // Light red
+  deleteButtonText: '#333',
+  deleteButtonHover: '#ff9999', // Slightly darker red on hover
   };
   
   export const darkTheme = {
@@ -22,4 +27,9 @@ export const lightTheme = {
     activeTabText: 'white',
     inactiveTabText: 'white',
     tabHoverBackground: '#2c3e50',
+    buttonBackground: '#2c3e50',
+    buttonText: '#ffffff',
+    deleteButtonBackground: '#8b0000', // Darker red for dark mode
+  deleteButtonText: '#ffffff',
+  deleteButtonHover: '#a50000', // Slightly lighter red on hover for dark mode
   };

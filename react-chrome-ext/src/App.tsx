@@ -131,7 +131,7 @@ const App: React.FC = () => {
           <Button onClick={() => setAutoCapture(!autoCapture)}>
             {autoCapture ? 'Stop Auto Capture' : 'Start Auto Capture'}
           </Button>
-          <Button onClick={clearScreenshots}>Clear Screenshots</Button>
+          <Button onClick={clearScreenshots} isDelete>Clear Screenshots</Button>
         </ButtonGroup>
         <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText>
         
