@@ -3,6 +3,8 @@ from PIL import Image
 import pytesseract
 import io
 import openai
+from openai import OpenAI
+import os
 
 pdf_path = "onshape_handbook.pdf"
 api_key = "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"
@@ -39,16 +41,33 @@ def find_image_text_around(pdf_path, image, margin=50):
     return surrounding_text
 
 
-def summarize_text(api_key, text):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        prompt=f"Summarize the following text into 4 key points:\n\n{text}",
-        max_tokens=100,
-        n=1,
-        stop=None,
-        temperature=0.5)
-    return response.choices[0].text.strip()
+def summarize_text(self, api_key, text):
+    # response = openai.ChatCompletion.create(
+    #     model="gpt-3.5-turbo",
+    #     prompt=f"Summarize the following text into 4 key points:\n\n{text}",
+    #     max_tokens=100,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0.5)
+    # return response.choices[0].text.strip()
 
+    password = api_key
+    MODEL="gpt-4o"
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
+
+    
+    self.prompt_field = text
+    self.sinput = f"Summarize the following text into 4 key points:\n\n{text}",
+    api_key = password
+    completion = client.chat.completions.create(
+        model=MODEL,
+        messages = [
+            {"role": "system", "content": self.sinput},
+            {"role": "user", "content": self.prompt_field}
+        ],
+    )
+    
+    return completion.choices[0].message.content
 
 images, full_text = extract_images_and_text(pdf_path)
 
