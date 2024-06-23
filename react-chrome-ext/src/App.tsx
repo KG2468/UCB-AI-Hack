@@ -13,6 +13,8 @@ const App: React.FC = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [autoCapture, setAutoCapture] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [isWaitingForAI, setIsWaitingForAI] = useState(false);
+  
 
   useEffect(() => {
     loadScreenshots();
@@ -63,6 +65,22 @@ const App: React.FC = () => {
     });
   };
 
+  const handleSendMessage = (msg: ChatMessage) => {
+    setChatMessages(prevMessages => [...prevMessages, msg]);
+    setIsWaitingForAI(true);
+    
+    // Add AI response
+    const aiMessage: ChatMessage = {
+      message: "AI part goes here",
+      timestamp: new Date().toISOString(),
+      isUser: false
+    };
+    setTimeout(() => {
+      setChatMessages(prevMessages => [...prevMessages, aiMessage]);
+      setIsWaitingForAI(false);
+    }, 1000); // Increased delay to 1 second to make the effect more noticeable
+  };
+  
   return (
     <AppContainer>
       <Title>CADvisor</Title>
@@ -82,7 +100,11 @@ const App: React.FC = () => {
       </ScreenshotListContainer>
       <ScreenshotDisplay screenshot={selectedScreenshot} />
       <ChatWindowContainer>
-        <ChatWindow chatMessages={chatMessages} onSendMessage={(msg) => setChatMessages([...chatMessages, msg])} />
+        <ChatWindow 
+          chatMessages={chatMessages} 
+          onSendMessage={handleSendMessage}
+          isWaitingForAI={isWaitingForAI}
+        />
       </ChatWindowContainer>
     </AppContainer>
   );
