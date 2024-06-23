@@ -2,11 +2,14 @@
 import styled from 'styled-components';
 
 export const AppContainer = styled.div`
-  width: 350px;
+  width: 400px;
+  height: 600px;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
   background-color: #f5f5f5;
   color: #333;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Title = styled.h1`
@@ -43,11 +46,15 @@ export const StatusText = styled.p`
 `;
 
 export const ScreenshotListContainer = styled.div`
-  margin-top: 20px;
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
 `;
 
 export const ChatWindowContainer = styled.div`
-  margin-top: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ScreenshotListWrapper = styled.ul`
@@ -58,21 +65,40 @@ export const ScreenshotListWrapper = styled.ul`
 
 export const ScreenshotListItem = styled.li`
   cursor: pointer;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 15px;
+  margin: 10px 0;
   background-color: #ecf0f1;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  border-radius: 8px;
+  transition: background-color 0.3s, box-shadow 0.3s;
 
   &:hover {
     background-color: #d5dbdb;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const ScreenshotHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ScreenshotDate = styled.span`
+  font-size: 0.9em;
+  color: #34495e;
+`;
+
+export const ScreenshotDropdown = styled.div<{ expanded: boolean }>`
+  max-height: ${props => props.expanded ? '300px' : '0'};
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
 `;
 
 export const ScreenshotImage = styled.img`
   max-width: 100%;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 `;
 
 export const ChatWindowWrapper = styled.div`

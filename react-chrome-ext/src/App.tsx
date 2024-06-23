@@ -6,6 +6,9 @@ import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
 import { ChatMessage } from './types';
 import { AppContainer, Title, ButtonGroup, Button, StatusText, ScreenshotListContainer, ChatWindowContainer } from './styles';
+import { Tabs, Tab, TabPanel } from './TabComponents';
+import InitialQuestion from './InitialQuestion';
+
 
 const App: React.FC = () => {
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
@@ -15,6 +18,9 @@ const App: React.FC = () => {
   const [autoCapture, setAutoCapture] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [isWaitingForAI, setIsWaitingForAI] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const [projectDescription, setProjectDescription] = useState<string | null>(null);
+  
 
   useEffect(() => {
     loadScreenshots();
@@ -94,6 +100,17 @@ const App: React.FC = () => {
     }, 1000);
   };
 
+  const handleProjectDescription = (description: string) => {
+    setProjectDescription(description);
+    // You might want to send this description to your AI or store it for later use
+    const systemMessage: ChatMessage = {
+      message: `Project description: ${description}`,
+      timestamp: new Date().toISOString(),
+      isUser: false
+    };
+    setChatMessages([systemMessage]);
+  };
+
   return (
     <AppContainer>
       <Title>CADvisor</Title>
@@ -105,20 +122,35 @@ const App: React.FC = () => {
         <Button onClick={clearScreenshots}>Clear Screenshots</Button>
       </ButtonGroup>
       <StatusText>Auto Capture: {autoCapture ? 'On' : 'Off'}</StatusText>
-      <ScreenshotListContainer>
-        <ScreenshotList
-          screenshots={screenshots}
-          onSelectScreenshot={handleSelectScreenshot}
-        />
-      </ScreenshotListContainer>
-      <ScreenshotDisplay screenshot={selectedScreenshot} />
-      <ChatWindowContainer>
-        <ChatWindow 
-          chatMessages={chatMessages} 
-          onSendMessage={handleSendMessage}
-          isWaitingForAI={isWaitingForAI}
-        />
-      </ChatWindowContainer>
+      
+      <Tabs activeTab={activeTab} onChange={setActiveTab}>
+        <Tab>Screenshots</Tab>
+        <Tab>Chat</Tab>
+      </Tabs>
+
+      <TabPanel value={activeTab} index={0}>
+        <ScreenshotListContainer>
+          <ScreenshotList
+            screenshots={screenshots}
+            onSelectScreenshot={handleSelectScreenshot}
+          />
+        </ScreenshotListContainer>
+        {/* Remove the ScreenshotDisplay component from here */}
+      </TabPanel>
+
+      <TabPanel value={activeTab} index={1}>
+        <ChatWindowContainer>
+          {projectDescription === null ? (
+            <InitialQuestion onSubmit={handleProjectDescription} />
+          ) : (
+            <ChatWindow 
+              chatMessages={chatMessages} 
+              onSendMessage={handleSendMessage}
+              isWaitingForAI={isWaitingForAI}
+            />
+          )}
+        </ChatWindowContainer>
+      </TabPanel>
     </AppContainer>
   );
 };
