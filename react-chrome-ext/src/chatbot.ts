@@ -71,7 +71,8 @@ async function sendMessage(query: string, file: string): Promise<String> {
     });
     //{"type":"test", "text": "hi im clause"}
     //const msgString: string = msg.map(msg => msg.content).join("\n");
-    return JSON.stringify(msg.content[0]).substring(1, );
+    console.log(JSON.stringify(msg.content[0]).substring(22, ));
+    return "0";
 }
 
 console.log(sendMessage("This is my image.", "https://picsum.photos/200"));
