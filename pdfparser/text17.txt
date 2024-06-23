@@ -1,0 +1,14 @@
+GETTING STARTED WITH  ONSHAPE   
+16  
+There are four primary feature types:  
+• Extrude  
+• Revolve  
+• Sweep  
+• Loft 
+ 
+For an Extrude, you place a sketch and then add height or thickness.  Common objects 
+that use extrudes are boxes.  
+ 
+For a Revolve, you place a sketch and then revolve it around an axis.  An axis can be an edge or 
+line.   
+Common objects that use revolves are wheels and gears.  

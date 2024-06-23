@@ -1,8 +1,10 @@
 import PyPDF2
 # import pdfminer.six
+
 from pypdf import PdfReader
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextBoxHorizontal, LTImage
+
 import os
 from PIL import Image
 import pdfplumber
@@ -49,6 +51,7 @@ class Parser:
     #             count += 1
     
 
+
     def extract_images(self, pdf_path):
         reader = PdfReader(pdf_path)
 
@@ -68,6 +71,8 @@ class Parser:
         #         im.save(f"/Users/kinjal/Code/UCB-AI-Hack/pdfimages/image_{img['object_number']}.png")
         # first_page = pdf.pages[0]
         # print(first_page.chars[0])
+    # def extract_images(self, pdf_path):
+
         # output_dir = "/Users/kinjal/Code/UCB-AI-Hack/pdfimages"
         # if not os.path.exists(output_dir):
         #     os.makedirs(output_dir)
@@ -92,19 +97,20 @@ class Parser:
         reader = PdfReader(pdf)
         text_before_image = []
 
-        page_number = 4
-        page = reader.pages[page_number]
-        text = page.extract_text()
-        resources = page.get("/Resources", {})
-        xObject = page.get("/xObject", {})
+        # page_number = 
+        # page = reader.pages[page_number]
+        for page in range(len(reader.pages)):
+            text = reader.pages[page].extract_text()
+            resources = reader.pages[page].get("/Resources", {})
+            xObject = reader.pages[page].get("/xObject", {})
 
-        if not any(xObject[obj].get("/Subtype") == "/Image" for obj in xObject):
-            text_before_image.append(text)
+            if not any(xObject[obj].get("/Subtype") == "/Image" for obj in xObject):
+                text_before_image.append(text)
+            
+            with open ("text.txt", "a") as f:
+                f.write(text)
         
-        with open ("text" + str(page_number) + ".txt", "a") as f:
-            f.write(text)
-        
-        return "\n".join(text_before_image)
+        # return "\n".join(text_before_image)
     
 parsing = Parser()
 #parsing.image_saver("./onshape_handbook.pdf")
