@@ -4,6 +4,8 @@ from openai import OpenAI
 import os
 import PyPDF2
 from PyPDF2 import PdfReader
+import base64
+import requests
 
 pdf_path = "onshape_handbook.pdf"
 api_key = "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"
@@ -62,6 +64,7 @@ def read_text_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
 
+
 def summarize_text(img_url, pdf_path):
     password = "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"
     MODEL="gpt-4o"
@@ -70,23 +73,57 @@ def summarize_text(img_url, pdf_path):
     word_saver(pdf_path)
 
     file_text = read_text_file("text.txt")
+
+    # Function to encode the image
+    def encode_image(image_path):
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
+    # Getting the base64 string
+    base64_image = encode_image(pdf_path)
+
+    headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {password}"
+}
     
     # self.sinput = f"Summarize the following text into 4 key points:\n\n{text}",
-    api_key = password
-    completion = client.chat.completions.create(
-        model=MODEL,
-        messages = [
-            {"role": "user", "content": [
+    # api_key = password
+    # completion = client.chat.completions.create(
+    #     model=MODEL,
+    #     messages = [
+    #         {"role": "user", "content": [
+    #             {"type": "text", "text": f"Given this image and this text from a PDF, find the relevant text corresponding to the image. Here's the text from the PDF:\n\n{file_text[:]}"},
+    #             {
+    #                 "type": "image_url",
+    #                 "image_url": {"url": img_url},
+    #             },
+    #         ],
+    #         }
+    #     ],
+    # )
+    
+    # return completion.choices[0].message.content
+
+    payload = {
+        "model": "gpt-4o",
+        "messages": [
+            {
+            "role": "user",
+            "content": [
                 {"type": "text", "text": f"Given this image and this text from a PDF, find the relevant text corresponding to the image. Here's the text from the PDF:\n\n{file_text[:]}"},
                 {
                     "type": "image_url",
-                    "image_url": img_url
-                },
-            ],
+                    "image_url": {
+                        "url": f"data:image/png;base64,{base64_image}"
+                    }
+                }
+            ]
             }
         ],
-    )
-    
-    return completion.choices[0].message.content
+    }
 
-print(summarize_text("https://picsum.photos/200", "onshape_handbook.pdf"))
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    return response
+
+print(summarize_text("UCB-AI-Hack/pdfimages/17Im0.png", "onshape_handbook.pdf").json())
