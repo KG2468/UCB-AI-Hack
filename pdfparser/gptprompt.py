@@ -84,7 +84,7 @@ def summarize_text(img_url, pdf_path):
                 {
                 "type": "image_url",
                 "image_url": {
-                    "url": f"data:image/jpeg;base64,{base64_image}"
+                    "url": f"data:image/png;base64,{base64_image}"
                 }
                 }
             ]
@@ -95,7 +95,8 @@ def summarize_text(img_url, pdf_path):
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     print(response.json())
-    return completion.choices[0].message.content
+    return response.json()
+    #return completion.choices[0].message.content
 
     # payload = {
     #     "model": "gpt-4o",
@@ -118,4 +119,4 @@ def summarize_text(img_url, pdf_path):
     # response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     # return response
 
-print(summarize_text("/Users/rithwiknukala/UCB-AI-Hack/pdfimages/3Im1.png", "onshape_handbook.pdf"))
+summarize_text("/Users/rithwiknukala/UCB-AI-Hack/pdfimages/11Im0.png", "onshape_handbook.pdf")

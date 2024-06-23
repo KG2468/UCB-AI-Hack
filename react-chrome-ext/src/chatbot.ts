@@ -74,97 +74,34 @@ import jimp from "jimp";
 //     //Converts image to string of base 64
     
 
-<<<<<<< HEAD
-    (async () => {
-        try {
-            const base64String = await convertImageTo64(file);
-            console.log(base64String);
-        } catch (error) {
-            console.error("Error converting image to base64:", error);
-        }
-    })();
+    function getBase64(file: string) {
+        const reader = new FileReader();
+        const blob_file = await fetch(file)
+        const response = await blob_file.blob()
+        reader.readAsDataURL(blob_file)
+        reader.onload = function () {
+            //me.modelvalue = reader.result;
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
 
-    const image1_media_type = "image/jpeg";
-    //const base64String = await fetchFileFromUrl(file);
-    const base64String = await convertImageTo64(file);
-    console.log(base64String);
+    // (async () => {
+    //     try {
+    //         const base64String = await convertImageTo64(file);
+    //         console.log(base64String);
+    //     } catch (error) {
+    //         console.error("Error converting image to base64:", error);
+    //     }
+    // })();
 
-=======
-//     // //Converts file path into a File object
-//     // async function fetchFileFromUrl(url: string): Promise<File> {
-//     //     const response = await fetch(url);
-//     //     const blob = await response.blob();
-//     //     return new File([blob], 'image.jpg', { type: 'image/jpeg' });
-//     // }
+    // const image1_media_type = "image/jpeg";
+    // //const base64String = await fetchFileFromUrl(file);
+    // const base64String = await convertImageTo64(file);
+    // console.log(base64String);
 
-//     (async () => {
-//         try {
-//             const base64String = await convertImageTo64(file);
-//             console.log(base64String);
-//         } catch (error) {
-//             console.error("Error converting image to base64:", error);
-//         }
-//     })();
-
-//     const image1_media_type = "image/jpeg";
-//     //const base64String = await fetchFileFromUrl(file);
-//     const base64String = await convertImageTo64(file);
-//     console.log(base64String);
-
-//     const msg = await anthropic.messages.create({
-//       model: "claude-3-5-sonnet-20240620",
-//       max_tokens: 1024,
-//       messages: [
-//         { role: "user", 
-//             content: [
-//                 {
-//                     "type": "image",
-//                     "source": {
-//                         "type": "base64",
-//                         "media_type": image1_media_type,
-//                         "data": base64String,
-//                     },
-//                 },
-//                 {
-//                     "type": "text",
-//                     "text": "You are a CAD expert. Do this."
-//                 }
-//         ]}
-//       ],
-//     });
-//     //{"type":"test", "text": "hi im clause"}
-//     //const msgString: string = msg.map(msg => msg.content).join("\n");
-//     console.log(JSON.stringify(msg.content[0]).substring(22, ));
-//     return "0";
-// }
-
-async function askQuestion(designGoal: string, specificQuestion: string, file: string[]): Promise<string> {
-    console.log('hey');
-    const anthropic = new Anthropic({
-        apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
-    });
-    // let images = [];
-    // console.log(file);
-    // for (let i = 0; i < file.length; i++) {
-    //     const base64String = await convertImageTo64(file[i]);
-    //     console.log('hey');
-    //     images.push(base64String);
-    //     // images.push({
-    //     //     "type": "image",
-    //     //     "source": {
-    //     //         "type": "base64",
-    //     //         "media_type": "image/png",
-    //     //         "data": base64String,
-    //     //     },
-    //     // });
-    // }
-    // images.push(
-    //     {
-    //         "type": "text",
-    //         "text": specificQuestion
-    //     },
-    // );
->>>>>>> 16fbdeba7c8006fa0b13cfd83c02091c93ca6251
     const msg = await anthropic.messages.create({
         model: "claude-3-5-sonnet-20240620",
         max_tokens: 100,

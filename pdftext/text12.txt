@@ -1,0 +1,1 @@
+'This image displays a menu from what appears to be a document management or file storage interface. The menu options are:\n\n- Recently opened\n- My documents\n  - Created by me\n  - Shared with me\n- Public (highlighted)\n- Tutorials & Samples\n- Trash (0)\n\nThe numbers in parentheses may indicate the number of items or files in the respective category.'

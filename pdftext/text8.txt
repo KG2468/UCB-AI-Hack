@@ -1,0 +1,1 @@
+'This image shows a form with several dropdown selection fields, filled out as follows:\n\n1. **First dropdown**: "Educator"\n2. **Second dropdown**: "Laney College"\n3. **Third dropdown**: "College or University"\n4. **Fourth dropdown**: "Adjunct Faculty"\n\nBelow the dropdown fields, there is a button labeled "CREATE FREE ACCOUNT."'
