@@ -1,8 +1,8 @@
 // App.tsx
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
-import { askQuestion, askQuestionTemp } from './chatbot';
 import ScreenshotDisplay from './ScreenshotDisplay';
+import { askQuestion, askQuestionTemp } from './chatbot';
 import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
 import { ChatMessage } from './types';
@@ -26,7 +26,6 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [projectDescription, setProjectDescription] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   
 
   useEffect(() => {
@@ -35,24 +34,22 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (autoCapture) {
-      // chrome.alarms.create("Screenshot", {when: Date.now()+12000});
-      // chrome.alarms.onAlarm.addListener(captureScreenshot);
-      // setIntervalId(1);
-      const id = window.setInterval(captureScreenshot, 12000);
+      const id = window.setInterval(captureScreenshot, 1000);
       setIntervalId(id);
     } else {
       if (intervalId) {
         window.clearInterval(intervalId);
-        // chrome.alarms.clear("Screenshot");
         setIntervalId(null);
       }
     }
     return () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
     };
   }, [autoCapture]);
 
   useEffect(() => {
-
     if (selectedIndex !== null && screenshots.length > selectedIndex) {
       setSelectedScreenshot(screenshots[selectedIndex]);
     }
@@ -88,7 +85,6 @@ const App: React.FC = () => {
     });
   };
 
-
   const handleSelectScreenshot = (screenshot: Screenshot, index: number) => {
     setSelectedScreenshot(screenshot);
     setSelectedIndex(index);
@@ -121,6 +117,7 @@ const App: React.FC = () => {
     };
     setChatMessages([systemMessage]);
   };
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };

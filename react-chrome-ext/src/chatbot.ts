@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
-import axios from "axios";
-import jimp from "jimp";
+//import axios from "axios";
+//import jimp from "jimp";
 // import { ChatAnthropic } from "@langchain/anthropic";
 // import type { ChatPromptTemplate } from "@langchain/core/prompts";
 // import { pull } from "langchain/hub";
@@ -160,7 +160,7 @@ import jimp from "jimp";
 async function askQuestion(designGoal: string, specificQuestion: string, file: string[]){
     console.log('hey');
     const anthropic = new Anthropic({
-        apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
+        apiKey: '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', // defaults to process.env["ANTHROPIC_API_KEY"]
     });
     let images = [];
     console.log(file);

@@ -14,13 +14,8 @@ export const AppContainer = styled.div`
   height: 600px;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
-<<<<<<< HEAD
-  background-color: #f5f5f5;
-  color: #333;
-=======
   background-color: ${props => props.theme.body};
   color: ${props => props.theme.text};
->>>>>>> main
   display: flex;
   flex-direction: column;
 `;
@@ -85,21 +80,13 @@ export const ScreenshotListItem = styled.li`
   cursor: pointer;
   padding: 15px;
   margin: 10px 0;
-<<<<<<< HEAD
-  background-color: #ecf0f1;
-=======
   background-color: ${props => props.theme.grayMessage};
   color: ${props => props.theme.grayMessageText};
->>>>>>> main
   border-radius: 8px;
   transition: background-color 0.3s, box-shadow 0.3s;
 
   &:hover {
-<<<<<<< HEAD
-    background-color: #d5dbdb;
-=======
     background-color: ${props => props.theme.grayMessage === '#ecf0f1' ? '#d5dbdb' : '#3a3a4e'};
->>>>>>> main
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 `;
@@ -112,11 +99,7 @@ export const ScreenshotHeader = styled.div`
 
 export const ScreenshotDate = styled.span`
   font-size: 0.9em;
-<<<<<<< HEAD
-  color: #34495e;
-=======
   color: ${props => props.theme.secondaryText};
->>>>>>> main
 `;
 
 export const ScreenshotDropdown = styled.div<{ expanded: boolean }>`
@@ -128,11 +111,7 @@ export const ScreenshotDropdown = styled.div<{ expanded: boolean }>`
 export const ScreenshotImage = styled.img`
   max-width: 100%;
   border-radius: 5px;
-<<<<<<< HEAD
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-=======
   box-shadow: 0 2px 4px ${props => props.theme.shadowColor};
->>>>>>> main
   margin-top: 10px;
 `;
 
@@ -217,4 +196,3 @@ export const SendButton = styled.button`
     background-color: ${props => props.theme.buttonHover};
   }
 `;
-
