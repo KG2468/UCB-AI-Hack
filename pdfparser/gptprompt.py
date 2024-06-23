@@ -119,4 +119,4 @@ def summarize_text(img_url, pdf_path):
     # response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     # return response
 
-summarize_text("/Users/rithwiknukala/UCB-AI-Hack/pdfimages/11Im0.png", "onshape_handbook.pdf")
+summarize_text("/Users/rithwiknukala/UCB-AI-Hack/pdfimages/11Im1.png", "onshape_handbook.pdf")
