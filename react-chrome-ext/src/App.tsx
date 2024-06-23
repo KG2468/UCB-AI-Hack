@@ -1,6 +1,7 @@
 // App.tsx
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
+import { askQuestion } from './chatbot';
 import ScreenshotDisplay from './ScreenshotDisplay';
 import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
@@ -13,29 +14,37 @@ const App: React.FC = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [autoCapture, setAutoCapture] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
-  const [isWaitingForAI, setIsWaitingForAI] = useState(false);
+  const [isWaitingForAI, setIsWaitingForAI] = useState(true);
+  let [error, setError] = useState<string | null>("");
   
 
   useEffect(() => {
     loadScreenshots();
   }, []);
 
+  // useEffect(() => {
+  //   if (autoCapture) {
+  //     // chrome.alarms.create("Screenshot", {when: Date.now()+12000});
+  //     // chrome.alarms.onAlarm.addListener(captureScreenshot);
+  //     // setIntervalId(1);
+  //     const id = window.setInterval(captureScreenshot, 12000);
+  //     setIntervalId(id);
+  //   } else {
+  //     if (intervalId) {
+  //       window.clearInterval(intervalId);
+  //       // chrome.alarms.clear("Screenshot");
+  //       setIntervalId(null);
+  //     }
+  //   }
+  //   return () => {
+  //   };
+  // }, [autoCapture]);
+
   useEffect(() => {
-    if (autoCapture) {
-      const id = window.setInterval(captureScreenshot, 1000);
-      setIntervalId(id);
-    } else {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-        setIntervalId(null);
-      }
+    if (screenshots.length == 5) {
+      setIsWaitingForAI(false);
     }
-    return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-      }
-    };
-  }, [autoCapture]);
+  }), [screenshots];
 
   const loadScreenshots = () => {
     chrome.storage.local.get({ screenshots: [] }, (result) => {
@@ -65,20 +74,22 @@ const App: React.FC = () => {
     });
   };
 
-  const handleSendMessage = (msg: ChatMessage) => {
+  const handleSendMessage = async (msg: ChatMessage) =>  {
+    console.log(msg.message);
     setChatMessages(prevMessages => [...prevMessages, msg]);
     setIsWaitingForAI(true);
     
     // Add AI response
+    const aiAnswer = await askQuestion("A basic car model", msg.message, screenshots.map(screenshot => screenshot.url));
     const aiMessage: ChatMessage = {
-      message: "AI part goes here",
+      message: aiAnswer,
       timestamp: new Date().toISOString(),
       isUser: false
     };
-    setTimeout(() => {
+    // setTimeout(() => {
       setChatMessages(prevMessages => [...prevMessages, aiMessage]);
       setIsWaitingForAI(false);
-    }, 1000); // Increased delay to 1 second to make the effect more noticeable
+    // }, 1000); // Increased delay to 1 second to make the effect more noticeable
   };
   
   return (
