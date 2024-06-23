@@ -43,9 +43,17 @@ const App: React.FC = () => {
           url: dataUrl,
           date: new Date().toISOString(),
         };
-        const updatedScreenshots = [...screenshots, newScreenshot];
-        chrome.storage.local.set({ screenshots: updatedScreenshots }, () => {
-          setScreenshots(updatedScreenshots);
+        // Use functional update to ensure we have the latest state
+        setScreenshots((prevScreenshots) => {
+          let updatedScreenshots = [...prevScreenshots, newScreenshot];
+          // Ensure only the last 5 screenshots are kept
+          if (updatedScreenshots.length > 5) {
+            updatedScreenshots = updatedScreenshots.slice(-5);
+          }
+          chrome.storage.local.set({ screenshots: updatedScreenshots }, () => {
+            // This callback doesn't need to update state again
+          });
+          return updatedScreenshots;
         });
       });
     });
