@@ -1,4 +1,5 @@
 You can view the submission page of the project by visiting [this link](https://devpost.com/software/cadvisor-ai).
+[![Watch the video](https://raw.githubusercontent.com/KG2468/UCB-AI-Hack/main/Demo/Thumbnail.png)](https://raw.githubusercontent.com/KG2468/UCB-AI-Hack/main/Demo/CADvisorDemo.mp4)
 
 ## Challenges we ran into
 - Integrating the Chrome extension with various CAD applications to capture real-time screen data
