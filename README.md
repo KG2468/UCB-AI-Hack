@@ -1,6 +1,6 @@
 You can view the submission page of the project by visiting [this link](https://devpost.com/software/cadvisor-ai).
 
-Click the image below to download the live demo.
+Click the image below to download the video demo.
 [![Watch the video](https://raw.githubusercontent.com/KG2468/UCB-AI-Hack/main/Demo/Thumbnail.png)](https://raw.githubusercontent.com/KG2468/UCB-AI-Hack/main/Demo/CADvisorDemo.mp4)
 
 ## Challenges we ran into
