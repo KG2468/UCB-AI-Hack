@@ -1,0 +1,8 @@
+GETTING STARTED WITH  ONSHAPE   
+9 14. If you l eft click on the smaller cube (D isplay  Options  cube), you will get a shortcut menu 
+where you can change the different display options as well as default orientations.  
+ 
+15. In the model browser, you see a list of parts and sub -assemblies. The Base Plate has an 
+icon next to it to indicate it is grounded or  fixed in place.  The Base Plate, belt, 
+casing ring, and dowel pins are parts.  
+ 

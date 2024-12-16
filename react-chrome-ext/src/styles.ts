@@ -196,4 +196,3 @@ export const SendButton = styled.button`
     background-color: ${props => props.theme.buttonHover};
   }
 `;
-

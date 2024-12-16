@@ -1,0 +1,8 @@
+GETTING STARTED WITH  ONSHAPE   
+11 20. The Shaft 1 tab opens.  
+ 
+21. In the model browser, five parts are listed.  
+ 
+22. Select Copy Workspace… from the Document menu . 
+ 
+ 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import ScreenshotList from './ScreenshotList';
 import ScreenshotDisplay from './ScreenshotDisplay';
+import { askQuestion, askQuestionTemp } from './chatbot';
 import { Screenshot } from './types';
 import ChatWindow from './ChatWindow';
 import { ChatMessage } from './types';
@@ -89,13 +90,14 @@ const App: React.FC = () => {
     setSelectedIndex(index);
   };
 
-  const handleSendMessage = (msg: ChatMessage) => {
+  const handleSendMessage = async (msg: ChatMessage) => {
     setChatMessages(prevMessages => [...prevMessages, msg]);
     setIsWaitingForAI(true);
     
     // Add AI response
+    const aiAnswer = await askQuestion(projectDescription!, msg.message, screenshots.map(screenshot => screenshot.url));
     const aiMessage: ChatMessage = {
-      message: "AI part goes here",
+      message: aiAnswer,
       timestamp: new Date().toISOString(),
       isUser: false
     };
